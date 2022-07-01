@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for uploaded_image in uploaded_images %}
+                <div class="col-2 mt-2">
+                    <div class="card bg-light" style="height: 100%">
+                        <img width=200 src="{{ uploaded_image.image.url }}" class="card-img-top"
+                             alt="{{ uploaded_image.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ uploaded_image.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-6">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                        {% endif %}
+                        {% for page_number in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_number == page_obj.number %}active{% endif %}"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
