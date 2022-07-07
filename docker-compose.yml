@@ -9,6 +9,19 @@ services:
       - 5432:5432
     env_file:
       - .env.db
+  web:
+    build: .
+    command: ls -la
+    volumes:
+      - .:/application
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
