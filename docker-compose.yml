@@ -11,9 +11,9 @@ services:
       - .env.db
   web:
     build: .
-    command: ls -la
+    command: python /application/manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/application
+      - ./:/application
     ports:
       - "8000:8000"
     environment:
