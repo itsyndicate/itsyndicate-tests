@@ -9,3 +9,8 @@ variable "s3_id" {
   description = "s3 id"
   default = "static1index-image.s3.eu-central-1.amazonaws.com"
 }
+
+variable "ssh_key_name" {
+ type = string
+ default = "ssh-key"
+}
