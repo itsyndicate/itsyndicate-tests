@@ -11,6 +11,9 @@ resource "aws_key_pair" "ssh_key_pair" {
   key_name   = var.ssh_key_name
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
+output "ssh-key-private" {
+  value = tls_private_key.ssh_key.private_key_pem
+}
 
 resource "aws_instance" "backend" {
   ami                         = "ami-0c9354388bb36c088"
@@ -19,6 +22,7 @@ resource "aws_instance" "backend" {
   associate_public_ip_address = true
   security_groups             = [aws_security_group.backend.id]
   key_name                    = aws_key_pair.ssh_key_pair.key_name
+  vpc_security_group_ids      = [aws_security_group.backend.id]
   user_data                   = <<EOF
 apt-get update -y
 apt install -y git
@@ -40,18 +44,19 @@ EOF
   tags = {
     Name = "django-backend"
   }
-  depends_on = [aws_security_group.backend, aws_key_pair.ssh_key_pair, null_resource.copy_files]
+  depends_on = [aws_security_group.backend, aws_key_pair.ssh_key_pair]
 }
 
 resource "null_resource" "copy_files" {
   provisioner "remote-exec" {
- inline = ["apt install git -y",
-    "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
-    "cd itsyndicate-tests",
-    "rm -rf .git",
-    "docker-compose up -d",
+    inline = [
+      "apt install git -y",
+      "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
+      "cd itsyndicate-tests",
+      "rm -rf .git",
+      "docker-compose up -d",
     ]
-}
+  }
 
   connection {
     host        = aws_instance.backend.public_ip
