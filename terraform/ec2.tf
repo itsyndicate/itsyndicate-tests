@@ -17,7 +17,7 @@ output "ssh-key-private" {
 }
 
 resource "aws_instance" "backend" {
-  ami                         = "ami-0a1ee2fb28fe05df3"
+  ami                         = "ami-0c9354388bb36c088"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-1a.id
   associate_public_ip_address = true
@@ -44,8 +44,8 @@ EOF
 resource "null_resource" "copy_files" {
   provisioner "remote-exec" {
     inline = [
-      "sudo yum update -y",
-      "sudo yum install -y git curl",
+      "sudo apt update -y",
+      "sudo apt install -y git curl",
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
       "bash deploy.sh",
