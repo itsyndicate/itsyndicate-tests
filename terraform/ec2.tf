@@ -48,8 +48,7 @@ resource "null_resource" "copy_files" {
       "sudo yum install -y git curl",
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
-      "bash deploy.sh",
-      "docker-compose up -d"
+      "bash deploy.sh"
     ]
   }
 
