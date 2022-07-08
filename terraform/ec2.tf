@@ -13,10 +13,11 @@ resource "aws_key_pair" "ssh_key_pair" {
 }
 output "ssh-key-private" {
   value = tls_private_key.ssh_key.private_key_pem
+  sensitive = true
 }
 
 resource "aws_instance" "backend" {
-  ami                         = "ami-0c9354388bb36c088"
+  ami                         = "ami-0a1ee2fb28fe05df3"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-1a.id
   associate_public_ip_address = true
@@ -24,21 +25,14 @@ resource "aws_instance" "backend" {
   key_name                    = aws_key_pair.ssh_key_pair.key_name
   vpc_security_group_ids      = [aws_security_group.backend.id]
   user_data                   = <<EOF
-apt-get update -y
-apt install -y git
-apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-mkdir -p /etc/apt/keyrings
+
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-apt-get update -y
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-apt-get install -y docker-compose
+sudo apt-get update -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get install -y docker-compose
 EOF
 
   tags = {
@@ -50,18 +44,18 @@ EOF
 resource "null_resource" "copy_files" {
   provisioner "remote-exec" {
     inline = [
-      "apt install git -y",
+      "sudo yum update -y",
+      "sudo yum install -y git curl",
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
-      "rm -rf .git",
-      "docker-compose up -d",
+      "bash deploy.sh"
     ]
   }
 
   connection {
     host        = aws_instance.backend.public_ip
     type        = "ssh"
-    user        = "ubuntu"
+    user        = "ec2-user"
     port        = 22
     private_key = tls_private_key.ssh_key.private_key_pem
     agent       = "false"
