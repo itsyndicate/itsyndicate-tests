@@ -57,7 +57,7 @@ resource "null_resource" "copy_files" {
   connection {
     host        = aws_instance.backend.public_ip
     type        = "ssh"
-    user        = "ec2-user"
+    user        = "ubuntu"
     port        = 22
     private_key = tls_private_key.ssh_key.private_key_pem
     agent       = "false"
