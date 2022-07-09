@@ -9,5 +9,6 @@ sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo service docker restart
-aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 138941284341.dkr.ecr.eu-central-1.amazonaws.com
+$(aws ecr get-login --no-include-email --region eu-central-1);
+docker pull 138941284341.dkr.ecr.eu-central-1.amazonaws.com/django-backend:latest
 docker-compose up -d
