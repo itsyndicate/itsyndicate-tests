@@ -1,18 +1,19 @@
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = var.s3_id
-    origin_id   = var.s3_id
-
+    connection_attempts = 3
+    connection_timeout  = 10
+    domain_name         = var.s3_id
+    origin_id           = var.s3_id
   }
   is_ipv6_enabled = true
   enabled         = true
 
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD",]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = var.s3_id
-    compress         = true
+    allowed_methods        = ["GET", "HEAD",]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "http://static1index-image.s3-website.eu-central-1.amazonaws.com"
+    compress               = true
     cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     viewer_protocol_policy = "allow-all"
     min_ttl                = 0
