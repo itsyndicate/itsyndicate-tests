@@ -20,6 +20,16 @@ services:
       - .env.db
     depends_on:
       - db
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./templates/:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    env_file:
+      - .env.db
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
