@@ -48,11 +48,11 @@ resource "null_resource" "copy_files" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update -y",
-      "sudo apt install -y git curl",
+      "sudo yum update -y",
+      "sudo yum install -y git curl",
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
-      "bash deploy.sh",
+      "bash deploy.sh"
     ]
   }
 
