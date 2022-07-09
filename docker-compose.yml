@@ -23,14 +23,14 @@ services:
   nginx:
     image: nginx:latest
     volumes:
-      - ./templates/:/usr/share/nginx/html
-      - ./default.conf:/etc/nginx/conf.d/
+      - ./templates/:/usr/share/nginx/html/
+      - ./nginx.conf:/etc/nginx/
     ports:
       - "80:80"
     env_file:
       - .env.db
     depends_on:
-      - db
+      - web
 
 volumes:
   postgres_data:
