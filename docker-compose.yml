@@ -24,6 +24,7 @@ services:
     image: nginx:latest
     volumes:
       - ./templates/:/usr/share/nginx/html
+      - ./default.conf:/etc/nginx/conf.d/
     ports:
       - "80:80"
     env_file:
