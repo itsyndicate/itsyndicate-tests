@@ -17,7 +17,7 @@ output "ssh-key-private" {
 }
 
 resource "aws_instance" "backend" {
-  ami                         = "ami-0c9354388bb36c088"
+  ami                         = "ami-0a1ee2fb28fe05df3"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public-1a.id
   associate_public_ip_address = true
@@ -59,7 +59,7 @@ resource "null_resource" "copy_files" {
   connection {
     host        = aws_instance.backend.public_ip
     type        = "ssh"
-    user        = "ubuntu"
+    user        = "ec2-user"
     port        = 22
     private_key = tls_private_key.ssh_key.private_key_pem
     agent       = "false"
