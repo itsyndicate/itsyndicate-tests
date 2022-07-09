@@ -49,7 +49,6 @@ resource "null_resource" "copy_files" {
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
       "bash deploy.sh",
-      "pwd",
       "docker-compose up -d",
     ]
   }
