@@ -3,7 +3,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     connection_attempts = 3
     connection_timeout  = 10
     domain_name         = var.s3_id
-    origin_id           = var.s3_id
+    origin_id           = "static1index-image.s3-website.eu-central-1.amazonaws.com"
   }
   is_ipv6_enabled = true
   enabled         = true
