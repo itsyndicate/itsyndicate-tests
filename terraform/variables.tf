@@ -7,7 +7,7 @@ variable "region" {
 variable "s3_id" {
   type = string
   description = "s3 id"
-  default = "static1index-image.s3.eu-central-1.amazonaws.com"
+  default = "http://static1index-image.s3-website.eu-central-1.amazonaws.com"
 }
 
 variable "ssh_key_name" {
