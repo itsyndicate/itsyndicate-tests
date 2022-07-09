@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.db
   web:
-    build: .
+    image: 138941284341.dkr.ecr.eu-central-1.amazonaws.com/django-backend:latest
     command: python /application/manage.py runserver 0.0.0.0:8000
     volumes:
       - ./:/application
