@@ -42,6 +42,10 @@ EOF
 }
 
 resource "null_resource" "copy_files" {
+  triggers = {
+    always_run = timestamp()
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo apt update -y",
@@ -49,7 +53,6 @@ resource "null_resource" "copy_files" {
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
       "bash deploy.sh",
-      "docker-compose up -d",
     ]
   }
 
