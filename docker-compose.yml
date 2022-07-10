@@ -28,7 +28,7 @@ services:
     volumes:
       - ./templates/:/usr/share/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
-      - ./nginx.conf:/etc/nginx/
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
     depends_on:
