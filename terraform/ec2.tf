@@ -45,6 +45,7 @@ resource "null_resource" "copy_files" {
       "bash deploy.sh",
       "docker-compose exec web python /application/manage.py collectstatic --no-input",
       "docker-compose exec web python /application/manage.py makemigrations --no-input",
+      "docker-compose exec web python /application/manage.py flush --no-input",
       "docker-compose exec web python /application/manage.py migrate --run-syncdb --no-input",
       "docker-compose exec web python /application/manage.py startapp upload"
     ]
