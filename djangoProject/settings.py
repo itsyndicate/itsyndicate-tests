@@ -115,7 +115,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 # STATIC_ROOT = "/usr/share/app/staticfiles"
-MEDIA_URL = '/usr/src/app/mediafiles'
+MEDIA_URL = '/usr/src/app/mediafiles/'
 MEDIA_ROOT = BASE_DIR / 'media'
 #
 # STATIC_URL = '/staticfiles/'
