@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'app',
+    "upload",
 ]
 
 MIDDLEWARE = [
