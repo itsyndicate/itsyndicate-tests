@@ -13,7 +13,7 @@ services:
     image: 138941284341.dkr.ecr.eu-central-1.amazonaws.com/django-backend:latest
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./templates/:/home/app/web/static
+      - ./templates/:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
       - "8000:8000"
@@ -24,7 +24,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - ./templates/:/home/app/web/static
+      - ./templates/:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
       - "80:80"
