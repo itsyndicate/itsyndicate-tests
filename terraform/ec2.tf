@@ -43,6 +43,7 @@ resource "null_resource" "copy_files" {
       "git clone https://github.com/inemyrovsk/itsyndicate-tests.git",
       "cd itsyndicate-tests",
       "bash deploy.sh",
+      "rm -rf .git",
       "docker-compose exec web python manage.py collectstatic --no-input",
       "docker-compose exec web python manage.py makemigrations --no-input",
       "docker-compose exec web python manage.py flush --no-input",
