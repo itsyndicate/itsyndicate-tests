@@ -11,7 +11,7 @@ services:
       - .env.db
   web:
     image: 138941284341.dkr.ecr.eu-central-1.amazonaws.com/django-backend:latest
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./templates/:/home/app/web/static
       - media_volume:/home/app/web/mediafiles
