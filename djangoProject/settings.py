@@ -119,7 +119,7 @@ USE_TZ = True
 # MEDIA_ROOT = BASE_DIR / 'media'
 #
 # STATIC_URL = '/staticfiles/'
-# STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # MEDIA_URL = '/usr/src/app/mediafiles/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
