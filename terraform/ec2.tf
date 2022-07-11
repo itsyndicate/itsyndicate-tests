@@ -4,7 +4,6 @@ resource "aws_key_pair" "key_pair" {
   public_key = file(var.ssh_public_key_path)
 }
 
-
 resource "aws_instance" "my_server" {
   provider                 = aws.germany
   ami                      = data.aws_ami.latest_ubuntu.id
@@ -15,31 +14,42 @@ resource "aws_instance" "my_server" {
   user_data              = file("ec2_user_data.sh")
 
   tags                     = merge(var.common_tags, { Name = "${var.common_tags["Environment"]} Server Build by Terraform" })
-  //lifecycle {
-  //  create_before_destroy  = false
-  //}
+
+  lifecycle {
+    create_before_destroy  = false
+  }
+
+provisioner "file" {
+    source      = "../docker.sh"
+    destination = "/home/ubuntu/docker.sh"
+  }
+
+  provisioner "file" {
+    source      = "/home/webxdata/.docker/config.json"
+    destination = "/home/ubuntu/docker_config.json"
+  }
 
   connection {
     type     = "ssh"
     user     = "ubuntu"
     host     = aws_instance.my_server.public_ip
-    port = 22
     private_key = file(var.ssh_private_key_path)
   }
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get update",
-      "sudo apt-get install -y git curl wget",
       "git clone https://github.com/domorelivelonger/itsyndicate-tests.git",
       "cd itsyndicate-tests",
       "sed -i 's@domorelivelonger/django_test@${module.aws_ecr_docker_image.repository_url}@g' docker-compose.yml",
       "cp .env_sample .env",
       "cp .env.db_sample .env.db",
-      "docker-compose up -d"
+      "sed -i 's@eu-central-1@${var.region}@g' /home/ubuntu/docker.sh",
+      "bash /home/ubuntu/docker.sh"
     ]
   }
+
   depends_on = [module.aws_ecr_docker_image]
+
 }
 
 data "aws_ami" "latest_ubuntu" {
@@ -56,8 +66,6 @@ resource "aws_eip" "my_static_ip" {
   tags     = merge(var.common_tags, { Name = "${var.common_tags["Environment"]} Server IP" })
 
 }
-
-
 
 resource "aws_security_group" "my_server" {
   name = "My Security Group"
