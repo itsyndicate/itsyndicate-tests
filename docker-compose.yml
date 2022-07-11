@@ -15,8 +15,9 @@ services:
       - static:/static
     env_file:
       - .env
-    build:
-      context: .
+    image: domorelivelonger/django_test
+#    build:
+#      context: .
     ports:
       - "8000:8000"
 

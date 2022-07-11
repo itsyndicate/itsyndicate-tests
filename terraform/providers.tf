@@ -6,13 +6,8 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.21"
     }
-
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "2.17.0"
-    }
   }
-
+  
   required_version = ">= 0.14.9"
 }
 
@@ -29,5 +24,3 @@ provider "aws" {
   alias = "germany"
 }
 
-provider "docker" {
-}

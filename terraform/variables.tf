@@ -25,7 +25,7 @@ variable "ec2_size" {
   description = "Enter Instance Type"
   default = {
     "prod"    = "t3.medium"
-    "dev"     = "t3.micro"
+    "dev"     = "t2.micro"
     "staging" = "t2.small"
   }
 }
@@ -48,6 +48,11 @@ variable "ssh_public_key_path" {
   type        = string
   default     = "/home/webxdata/.ssh/id_rsa.pub"
 }
+variable "ssh_private_key_path" {
+  description = "The local path to the SSH Private Key"
+  type        = string
+  default     = "/home/webxdata/.ssh/id_rsa"
+}
 
 variable "enable_detailed_monitoring" {
   type    = bool
@@ -64,4 +69,3 @@ variable "common_tags" {
   Environment = "dev"
   }
 }
-

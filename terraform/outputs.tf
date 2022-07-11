@@ -46,3 +46,13 @@ output "domain_link_name_servers" {
 output "project_name" {
   value = local.project_owner
 }
+
+output "ecr_repository_url" {
+  description = "ECR repository URL of Docker image"
+  value       = module.aws_ecr_docker_image.repository_url
+}
+
+output "ecr_repository_tag" {
+  description = "Tag of Docker image"
+  value       = module.aws_ecr_docker_image.tag
+}
