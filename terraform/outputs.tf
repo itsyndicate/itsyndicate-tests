@@ -46,8 +46,3 @@ output "domain_link_name_servers" {
 output "project_name" {
   value = local.project_owner
 }
-
-output "django1-repository-URL" {
-  value = aws_ecr_repository.django1.repository_url
-}
-

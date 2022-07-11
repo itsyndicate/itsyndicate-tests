@@ -1,5 +1,5 @@
 
-
+/*
 # Start a container
 resource "docker_container" "ubuntu" {
   name  = "foo"
@@ -10,3 +10,4 @@ resource "docker_container" "ubuntu" {
 resource "docker_image" "ubuntu" {
   name = "ubuntu:precise"
 }
+*/

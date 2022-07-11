@@ -10,7 +10,6 @@ RUN apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-de
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 RUN python3 -m pip install -r requirements.txt --no-cache-dir
 RUN apk --purge del .build-deps
-#RUN pip install Pillow
 
 COPY . /app
 
