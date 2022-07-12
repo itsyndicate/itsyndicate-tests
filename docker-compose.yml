@@ -1,6 +1,26 @@
 version: '3.7'
 
 services:
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - django_gunicorn
+
+  django_gunicorn:
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    image: domorelivelonger/django_test
+#    build:
+#      context: .
+    ports:
+      - "8000:8000"
+
   db:
     image: postgres:13.3-alpine
     volumes:
@@ -12,3 +32,4 @@ services:
 
 volumes:
   postgres_data:
+  static:
