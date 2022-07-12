@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   db:
@@ -9,6 +9,28 @@ services:
       - 5432:5432
     env_file:
       - .env.db
+  web:
+    image: 138941284341.dkr.ecr.eu-central-1.amazonaws.com/django-backend:latest
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./templates/:/home/app/web/static
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.web
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./templates/:/home/app/web/static
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - "80:80"
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
+  media_volume:
